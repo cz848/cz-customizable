@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+// #!/usr/bin/env node
 
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
@@ -49,7 +49,7 @@ module.exports = {
   prompter(cz, commit) {
     const config = readConfigFile();
     config.subjectLimit = config.subjectLimit || 100;
-    log.info('All lines except first will be wrapped after 100 characters.');
+    log.info(`消息类型和描述总共不能超过${config.subjectLimit}个字符。`);
 
     const questions = require('./questions').getQuestions(config, cz);
 
@@ -76,7 +76,7 @@ module.exports = {
       } else if (answers.confirmCommit === 'yes') {
         commit(buildCommit(answers, config));
       } else {
-        log.info('Commit has been canceled.');
+        log.info('本次提交已被取消。');
       }
     });
   },

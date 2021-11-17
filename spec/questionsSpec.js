@@ -67,7 +67,7 @@ describe('cz-customizable', () => {
     expect(getQuestion(5).default).toEqual(null);
     expect(getQuestion(5).message).toMatch(/IMPERATIVE tense description/);
     expect(getQuestion(5).filter('Subject')).toEqual('subject');
-    expect(getQuestion(5).validate('bad subject that exceed limit for 6 characters')).toEqual('Exceed limit: 40');
+    expect(getQuestion(5).validate('bad subject that exceed limit for 6 characters')).toEqual('不能超过40个字！');
     expect(getQuestion(5).validate('good subject')).toEqual(true);
 
     // question 6 - BODY
@@ -109,7 +109,7 @@ describe('cz-customizable', () => {
       getQuestion(5).validate(
         'bad subject that exceed limit bad subject that exceed limitbad subject that exceed limit test test test'
       )
-    ).toEqual('Exceed limit: 100');
+    ).toEqual('不能超过100个字！');
   });
 
   it('subject should be lowercased by default', () => {

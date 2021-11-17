@@ -26,6 +26,7 @@ const getPreparedCommit = context => {
     preparedCommit = preparedCommit
       .replace(/^#.*/gm, '')
       .replace(/^\s*[\r\n]/gm, '')
+      .replace(/^[a-z]{2,6}: /g, '')
       .replace(/[\r\n]$/, '')
       .split(/\r\n|\r|\n/);
 
@@ -135,9 +136,8 @@ module.exports = {
         default: getPreparedCommit('subject'),
         validate(value) {
           const limit = config.subjectLimit || 100;
-          if (value.length > limit) {
-            return `Exceed limit: ${limit}`;
-          }
+          if (!value.length) return '请填写消息内容!';
+          if (value.length > limit) return `不能超过${limit}个字！`;
           return true;
         },
         filter(value) {
@@ -183,8 +183,7 @@ module.exports = {
         ],
         default: 0,
         message(answers) {
-          const SEP = '###--------------------------------------------------------###';
-          log.info(`\n${SEP}\n${buildCommit(answers, config)}\n${SEP}\n`);
+          log.info(`\n\n${buildCommit(answers, config)}\n\n`);
           return messages.confirmCommit;
         },
       },
